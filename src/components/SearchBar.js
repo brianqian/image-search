@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import { View, TextInput, StyleSheet, Button } from 'react-native';
 
-function SearchBar() {
+function SearchBar({ search }) {
   const [value, setValue] = useState('');
 
   const handleChange = (text) => {
     setValue(text);
   };
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    search({ param: value });
+  };
 
   return (
     <View style={styles.container}>
       <TextInput onChangeText={handleChange} value={value} />
-      <Button onPress={handleSubmit}>Search</Button>
+      <Button onPress={handleSubmit} title="Search">
+        Search
+      </Button>
     </View>
   );
 }

@@ -1,8 +1,8 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer, useState, useEffect } from 'react';
 import Client from '../utils/HTTPClient';
 
 const initialState = {
-  data: '',
+  data: [],
   isLoading: false,
   error: {
     status: '',
@@ -23,18 +23,21 @@ const reducer = (state, action) => {
   }
 };
 
-const useFetch = (endpoint, method, body) => {
-  const [state, dispatch] = useReducer(initialState, reducer);
+const useFetch = () => {
+  const [query, setQuery] = useState({ param: '', page: '' });
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const { param, page } = query;
   let isMounted = true;
 
   useEffect(() => {
     const fetchData = async () => {
       dispatch({ type: 'FETCHING' });
-      const resp = await Client.request(endpoint, method, body);
-      if (resp.error) {
-        dispatch({ type: 'ERROR', payload: resp });
+      const data = await Client.pixabayRequest(query.param, query.page);
+      if (data?.error) {
+        dispatch({ type: 'ERROR', payload: data });
       } else if (isMounted) {
-        dispatch({ type: 'SET_DATA', payload: resp.data });
+        dispatch({ type: 'SET_DATA', payload: data });
       }
     };
 
@@ -43,9 +46,10 @@ const useFetch = (endpoint, method, body) => {
     return () => {
       isMounted = false;
     };
-  }, [endpoint, method, body]);
+  }, [param, page]);
 
-  return { data: state.data, error: state.error };
+  const { data, error, isLoading } = state;
+  return { data, error, isLoading, setQuery };
 };
 
 export default useFetch;

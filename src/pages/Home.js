@@ -3,13 +3,15 @@ import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import SearchBar from '../components/SearchBar';
 import Constants from 'expo-constants';
 import useFetch from '../hooks/useFetch';
+import { PIXABAY_KEY } from 'react-native-dotenv';
+import ContentContainer from '../components/ContentContainer';
 
 const window = Dimensions.get('window');
 const screen = Dimensions.get('screen');
 
-const ENDPOINT = 'https://pixabay.com/api/';
-
 function Home() {
+  const { data, isLoading, error, setQuery } = useFetch();
+
   useEffect(() => {
     console.log(window, screen);
   }, []);
@@ -17,7 +19,9 @@ function Home() {
   return (
     <View style={styles.container}>
       <Text>Image Search</Text>
-      <SearchBar />
+      <SearchBar search={setQuery} />
+      {!!error.message && <Text>{error.message}</Text>}
+      <ContentContainer data={data?.hits} />
     </View>
   );
 }
@@ -28,6 +32,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 30,
+    paddingTop: 30 + Constants.statusBarHeight,
   },
 });
 
