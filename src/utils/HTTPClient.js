@@ -17,7 +17,6 @@ const pixabayRequest = async (query, page = 1) => {
   if (!formattedQuery) {
     return { error: { status: 400, message: 'Please enter something in the search!' } };
   }
-
   const url = `${API_URL}?key=${PIXABAY_KEY}&q=${encodeURIComponent(query)}&page=${page}`;
 
   const data = await request(url);
@@ -30,9 +29,3 @@ const Client = {
 };
 
 export default Client;
-
-const test = (p1, p2, p3) => {
-  console.log(p1, p2, p3);
-};
-const tester = ['one', undefined];
-test(...tester);

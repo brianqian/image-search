@@ -1,39 +1,35 @@
 import React, { useEffect } from 'react';
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import SearchBar from '../components/SearchBar';
-import Constants from 'expo-constants';
 import useFetch from '../hooks/useFetch';
-import { PIXABAY_KEY } from 'react-native-dotenv';
-import ContentContainer from '../components/ContentContainer';
+import ImageList from '../components/ImageList';
+import styled from 'styled-components/native';
 
-const window = Dimensions.get('window');
-const screen = Dimensions.get('screen');
+const Container = styled.View`
+  flex: 1;
+  align-items: center;
+  padding: 10px;
+`;
 
-function Home() {
+function Home({ navigation }) {
   const { data, isLoading, error, setQuery } = useFetch();
 
   useEffect(() => {
-    console.log(window, screen);
-  }, []);
+    const onChange = ({ window, screen }) => {
+      console.log('window', window, 'screen', screen);
+    };
+
+    // console.log(window, screen);
+  });
 
   return (
-    <View style={styles.container}>
+    <Container>
       <Text>Image Search</Text>
       <SearchBar search={setQuery} />
       {!!error.message && <Text>{error.message}</Text>}
-      <ContentContainer data={data?.hits} />
-    </View>
+      <ImageList data={data?.hits} navigation={navigation} />
+    </Container>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 30,
-    paddingTop: 30 + Constants.statusBarHeight,
-  },
-});
 
 export default Home;
