@@ -1,34 +1,41 @@
-import React from 'react';
-import { ScrollView, View, Text, Image } from 'react-native';
+import React, { useCallback } from 'react';
+import { Text, FlatList, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  selectImages,
+  selectPage,
+  selectQuery,
+  fetchImages,
+  selectResultCount,
+} from '../redux/AppState/appSlice';
+import ImageContainer from './ImageContainer';
 
-const Container = styled.View`
+const Container = styled.SafeAreaView`
   height: 400px;
   width: 100%;
   border: 1px solid red;
   flex: 5;
-`;
-
-const StyledImage = styled.Image`
-  height: ${(p) => p.h + 75}px;
-  width: ${(p) => p.w + 75}px;
-  flex: 1;
-`;
-
-const ImageContainer = styled.TouchableOpacity`
-  border: 1px solid gray;
-  width: 100%;
+  padding: 15px;
   align-items: center;
 `;
 
-function ImageList({ data = [], navigation }) {
-  const handleScroll = (e) => {
-    // console.log(e);
+const StyledList = styled.FlatList`
+  width: 100%;
+`;
+
+function ImageList({ navigation }) {
+  const dispatch = useDispatch();
+
+  const { images, currentPage, currentQuery, resultsFound } = useSelector((state) => state.app);
+
+  const getNextPage = () => {
+    console.log('get next page');
+    dispatch(fetchImages(currentQuery, currentPage));
   };
 
   const navigateToDetails = (img) => {
     const { imageHeight, imageWidth, largeImageURL, webformatURL, user, tags } = img;
-
     navigation.push('Details', {
       imageHeight,
       imageWidth,
@@ -39,25 +46,23 @@ function ImageList({ data = [], navigation }) {
     });
   };
 
+  const memoNavigate = useCallback((img) => navigateToDetails(img), []);
+
   return (
     <Container>
-      <ScrollView onScroll={handleScroll}>
-        <Text>Results found: {data.length}</Text>
-        {!!data.length &&
-          data.map((img) => {
-            return (
-              <ImageContainer key={img.id} onPress={() => navigateToDetails(img)}>
-                <StyledImage
-                  source={{
-                    uri: img.previewURL,
-                  }}
-                  h={img.previewHeight}
-                  w={img.previewWidth}
-                />
-              </ImageContainer>
-            );
-          })}
-      </ScrollView>
+      <Text>
+        Loaded {images.length} of {resultsFound} found
+      </Text>
+      <StyledList
+        contentContainerStyle={{ alignItems: 'center' }}
+        data={images}
+        keyExtractor={(item, i) => item.id.toString() + i}
+        renderItem={({ item }) => {
+          return <ImageContainer navigate={memoNavigate} img={item} />;
+        }}
+        onEndReached={getNextPage}
+        onEndReachedThreshold={0.5}
+      />
     </Container>
   );
 }

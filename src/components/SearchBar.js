@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Keyboard } from 'react-native';
 import styled from 'styled-components/native';
+import { useDispatch } from 'react-redux';
+import { fetchImages } from '../redux/AppState/appSlice';
 
 const Container = styled.View`
   height: 75px;
@@ -21,23 +23,22 @@ const StyledButton = styled.Button`
   align-self: flex-end;
 `;
 
-function SearchBar({ search }) {
+function SearchBar() {
   const [value, setValue] = useState('');
+  const dispatch = useDispatch();
 
   const handleChange = (text) => {
     setValue(text);
   };
   const handleSubmit = () => {
-    search({ param: value });
+    dispatch(fetchImages(value, 1));
     Keyboard.dismiss();
   };
 
   return (
     <Container>
       <StyledInput onChangeText={handleChange} value={value} />
-      <StyledButton onPress={handleSubmit} title="Search">
-        Search
-      </StyledButton>
+      <StyledButton onPress={handleSubmit} title="Search" />
     </Container>
   );
 }
