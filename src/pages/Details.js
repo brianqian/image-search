@@ -1,29 +1,36 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, SafeAreaView } from 'react-native';
+import styled from 'styled-components';
+import { Linking } from 'expo';
 
-function Details({ navigation, route }) {
+const StyledLink = styled.Text`
+  color: blue;
+  text-decoration: underline;
+`;
+
+function Details({ route }) {
   const { imageHeight, imageWidth, tags, src, largeImageURL, owner } = route.params;
+  console.log(route.params);
   return (
-    <View>
-      <Text>DETAILS PAGE</Text>
-      <Image source={{ uri: src }} />
+    <SafeAreaView>
       <View style={{ flexDirection: 'row' }}>
-        <View>
+        <View style={{ flex: 1 }}>
           <Text>Owner: </Text>
           <Text>Height: </Text>
           <Text>Width: </Text>
-          <Text>Original Image: </Text>
           <Text>Tags: </Text>
+          <Text>Original Image: </Text>
         </View>
-        <View>
+        <View style={{ flex: 1 }}>
           <Text>{owner}</Text>
           <Text>{imageHeight}</Text>
           <Text>{imageWidth}</Text>
-          <Text>{largeImageURL}</Text>
           <Text>{tags}</Text>
+          <StyledLink onPress={() => Linking.openURL(largeImageURL)}> {largeImageURL}</StyledLink>
         </View>
       </View>
-    </View>
+      <Image source={{ uri: src }} />
+    </SafeAreaView>
   );
 }
 
