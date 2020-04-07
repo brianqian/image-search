@@ -29,12 +29,6 @@ export const appSlice = createSlice({
   },
 });
 
-export const selectIsPortrait = (state) => state.app.isPortrait;
-export const selectImages = (state) => state.app.images;
-export const selectPage = (state) => state.app.currentPage;
-export const selectQuery = (state) => state.app.currentQuery;
-export const selectResultCount = (state) => state.app.resultsFound;
-
 export const { getImagesSuccess, getImagesFail } = appSlice.actions;
 export default appSlice.reducer;
 

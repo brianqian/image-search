@@ -9,18 +9,21 @@ const Container = styled.View`
   border: 1px solid gray;
   margin: 10px;
   width: 200px;
+  border-radius: 5px;
 `;
 
 const StyledInput = styled.TextInput`
   flex: 1;
   align-self: flex-start;
-  border: 1px solid green;
+  /* border: 1px solid green; */
   width: 100%;
+  padding: 8px;
 `;
 
 const StyledButton = styled.Button`
   flex: 1;
   align-self: flex-end;
+  margin: 10px;
 `;
 
 function SearchBar() {
