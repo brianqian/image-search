@@ -5,11 +5,11 @@ import { useDispatch } from 'react-redux';
 import { fetchImages } from '../redux/AppState/appSlice';
 
 const Container = styled.View`
-  height: 75px;
   border: 1px solid gray;
-  margin: 10px;
-  width: 200px;
   border-radius: 5px;
+  flex-direction: row;
+  height: 40px;
+  width: 350px;
 `;
 
 const StyledInput = styled.TextInput`
@@ -23,7 +23,8 @@ const StyledInput = styled.TextInput`
 const StyledButton = styled.Button`
   flex: 1;
   align-self: flex-end;
-  margin: 10px;
+  align-items: center;
+  justify-content: center;
 `;
 
 function SearchBar() {

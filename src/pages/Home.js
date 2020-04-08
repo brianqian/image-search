@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { Text } from 'react-native';
+import { Text, Dimensions, View } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
 import SearchBar from '../components/SearchBar';
 import ImageList from '../components/ImageList';
 import styled from 'styled-components/native';
-import { useSelector } from 'react-redux';
+import { setIsPortrait } from '../redux/AppState/appSlice';
 
 const Container = styled.View`
   flex: 1;
@@ -17,11 +18,21 @@ const Header = styled.View`
 `;
 
 function Home({ navigation }) {
+  const dispatch = useDispatch();
   const { status } = useSelector((state) => state.app);
+
+  useEffect(() => {
+    const onScreenRotation = ({ screen }) => {
+      const isPortrait = screen.width < screen.height;
+      dispatch(setIsPortrait(isPortrait));
+    };
+
+    Dimensions.addEventListener('change', onScreenRotation);
+    return () => Dimensions.removeEventListener('change', onScreenRotation);
+  });
 
   return (
     <Container>
-      <Text>Image Search</Text>
       <SearchBar />
       {!!status && <Text>{status}</Text>}
 

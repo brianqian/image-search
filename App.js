@@ -3,8 +3,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import styled from 'styled-components/native';
-import Constants from 'expo-constants';
 import { Provider } from 'react-redux';
+import Constants from 'expo-constants';
 import Details from './src/pages/Details';
 import store from './src/redux/store';
 import Home from './src/pages/Home';
@@ -12,14 +12,13 @@ import Home from './src/pages/Home';
 const Stack = createStackNavigator();
 
 const headerStyle = {
-  // height: 100,
+  height: 80,
   // borderWidth: 1,
   // borderColor: 'green',
 };
 
 const headerTitleStyle = {
-  fontSize: 20,
-  // color: 'red',
+  fontSize: 18,
 };
 
 const Container = styled.SafeAreaView`

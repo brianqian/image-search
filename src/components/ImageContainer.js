@@ -5,10 +5,9 @@ const Container = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   height: ${(p) => p.h + 30}px;
+  max-height: 100%;
   padding-top: 15px;
   padding-bottom: 15px;
-  /* border-bottom-width: 1px; */
-  /* border-bottom-color: gray; */
 `;
 
 const StyledImage = styled.Image`
@@ -18,8 +17,6 @@ const StyledImage = styled.Image`
   /* border-width: 1px;
   border-color: black; */
 `;
-
-const Text = styled.Text``;
 
 function ImageContainer({ navigate, img, h, w, src }) {
   const [image, setImage] = useState({ h, w, src });
@@ -38,14 +35,8 @@ function ImageContainer({ navigate, img, h, w, src }) {
   };
 
   return (
-    <Container onPress={navigate} h={image.h}>
-      <StyledImage
-        source={{ uri: image.src }}
-        h={image.h}
-        w={image.w}
-        onLoadEnd={() => console.log(w, h)}
-        onError={handleError}
-      />
+    <Container onPress={!!navigate && navigate} h={image.h}>
+      <StyledImage source={{ uri: image.src }} h={image.h} w={image.w} onError={handleError} />
     </Container>
   );
 }

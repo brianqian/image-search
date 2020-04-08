@@ -26,10 +26,16 @@ export const appSlice = createSlice({
     getImagesFail: (state, action) => {
       state.status = action.payload;
     },
+    setIsPortrait: (state, action) => {
+      console.log('isportrait', action.payload);
+      state.isPortrait = action.payload;
+    },
   },
 });
 
-export const { getImagesSuccess, getImagesFail } = appSlice.actions;
+export const selectIsPortrait = (state) => state.app.isPortrait;
+
+export const { getImagesSuccess, getImagesFail, setIsPortrait } = appSlice.actions;
 export default appSlice.reducer;
 
 export const fetchImages = (query, page) => async (dispatch) => {

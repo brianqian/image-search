@@ -10,8 +10,9 @@ const Container = styled.SafeAreaView`
   /* border: 1px solid red; */
   width: 100%;
   flex: 5;
-  padding: 15px;
+
   align-items: center;
+  max-height: 80%;
 `;
 
 const StyledList = styled.FlatList`

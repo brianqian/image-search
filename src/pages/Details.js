@@ -1,36 +1,46 @@
 import React from 'react';
-import { View, Text, Image, SafeAreaView } from 'react-native';
+import { View, Text } from 'react-native';
 import styled from 'styled-components';
-import { Linking } from 'expo';
+import ImageContainer from '../components/ImageContainer';
 
-const StyledLink = styled.Text`
-  color: blue;
-  text-decoration: underline;
+const Container = styled.SafeAreaView`
+  padding: 25px;
 `;
 
 function Details({ route }) {
-  const { imageHeight, imageWidth, tags, src, largeImageURL, owner } = route.params;
-  console.log(route.params);
+  const {
+    imageHeight,
+    imageWidth,
+    tags,
+    webformatURL,
+    user,
+    webformatHeight,
+    webformatWidth,
+  } = route.params;
+
   return (
-    <SafeAreaView>
+    <Container>
       <View style={{ flexDirection: 'row' }}>
         <View style={{ flex: 1 }}>
           <Text>Owner: </Text>
-          <Text>Height: </Text>
           <Text>Width: </Text>
+          <Text>Height: </Text>
           <Text>Tags: </Text>
-          <Text>Original Image: </Text>
         </View>
         <View style={{ flex: 1 }}>
-          <Text>{owner}</Text>
-          <Text>{imageHeight}</Text>
-          <Text>{imageWidth}</Text>
+          <Text>{user}</Text>
+          <Text>{imageWidth}px</Text>
+          <Text>{imageHeight}px</Text>
           <Text>{tags}</Text>
-          <StyledLink onPress={() => Linking.openURL(largeImageURL)}> {largeImageURL}</StyledLink>
         </View>
       </View>
-      <Image source={{ uri: src }} />
-    </SafeAreaView>
+      <ImageContainer
+        img={route.params}
+        src={webformatURL}
+        h={webformatHeight}
+        w={webformatWidth}
+      />
+    </Container>
   );
 }
 
