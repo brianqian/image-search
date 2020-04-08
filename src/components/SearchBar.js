@@ -31,18 +31,18 @@ function SearchBar() {
   const [value, setValue] = useState('');
   const dispatch = useDispatch();
 
-  const handleChange = (text) => {
+  const onChange = (text) => {
     setValue(text);
   };
-  const handleSubmit = () => {
+  const onSubmit = () => {
     dispatch(fetchImages(value, 1));
     Keyboard.dismiss();
   };
 
   return (
     <Container>
-      <StyledInput onChangeText={handleChange} value={value} onSubmitEditing={handleSubmit} />
-      <StyledButton onPress={handleSubmit} title="Search" />
+      <StyledInput onChangeText={onChange} value={value} onSubmitEditing={onSubmit} />
+      <StyledButton onPress={onSubmit} title="Search" />
     </Container>
   );
 }

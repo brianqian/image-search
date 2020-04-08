@@ -24,3 +24,9 @@ This project uses Yarn as a package manager so after installing packages by runn
 This will launch a web version of the dev tools where you can run various versions (web, iOS, Android) of the application. If you don't have an emulator, one can be downloaded for free from the [Android Studio](https://developer.android.com/studio) site. Once that's up and running, a new emulator can be configured from `Settings > AVD Manager > Create Virtual Device`. For this application the settings I used were a `Nexus 5X API 29x86` `API29` (all default settings). The green play button under Actions will launch the emulator.
 
 Once the emulator is running you can launch the application by either clicking `Run on Android device/emulator` in the browser dev tools or by pressing `'a'` in the command line where `expo` is running.
+
+## Images
+
+![portrait](https://raw.githubusercontent.com/brianqian/image-search/master/assets/portrait.png)
+![landscape](https://raw.githubusercontent.com/brianqian/image-search/master/assets/landscape.png)
+![details](https://raw.githubusercontent.com/brianqian/image-search/master/assets/details.png)
