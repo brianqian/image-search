@@ -3,8 +3,10 @@ import { View, Text } from 'react-native';
 import styled from 'styled-components';
 import ImageContainer from '../components/ImageContainer';
 
-const Container = styled.SafeAreaView`
+const Container = styled.ScrollView`
   padding: 25px;
+  height: 120%;
+  margin: 0;
 `;
 
 function Details({ route }) {

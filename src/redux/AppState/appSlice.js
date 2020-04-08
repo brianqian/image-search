@@ -4,7 +4,6 @@ import Client from '../../utils/HTTPClient';
 export const appSlice = createSlice({
   name: 'app',
   initialState: {
-    isPortrait: true,
     resultsFound: 0,
     currentQuery: '',
     currentPage: 1,
@@ -26,16 +25,10 @@ export const appSlice = createSlice({
     getImagesFail: (state, action) => {
       state.status = action.payload;
     },
-    setIsPortrait: (state, action) => {
-      console.log('isportrait', action.payload);
-      state.isPortrait = action.payload;
-    },
   },
 });
 
-export const selectIsPortrait = (state) => state.app.isPortrait;
-
-export const { getImagesSuccess, getImagesFail, setIsPortrait } = appSlice.actions;
+export const { getImagesSuccess, getImagesFail } = appSlice.actions;
 export default appSlice.reducer;
 
 export const fetchImages = (query, page) => async (dispatch) => {
@@ -43,14 +36,12 @@ export const fetchImages = (query, page) => async (dispatch) => {
   let totalResults;
   try {
     const data = await Client.pixabayRequest(query, page);
-    if (data.error) {
-      throw Error(JSON.stringify(data.error));
-    }
+    if (data.error) throw Error(data.message);
     images = data.hits;
     totalResults = data.totalHits;
-  } catch (e) {
-    const { message } = JSON.parse(e);
-    dispatch(getImagesFail(message));
+  } catch (err) {
+    dispatch(getImagesFail(err.message));
+    return;
   }
 
   dispatch(getImagesSuccess({ images, totalResults, query, page }));

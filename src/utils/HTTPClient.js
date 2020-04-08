@@ -1,7 +1,7 @@
 import { PIXABAY_KEY } from 'react-native-dotenv';
 const API_URL = 'https://pixabay.com/api/';
 
-const request = async (endpoint, method, body) => {
+const request = async (endpoint) => {
   try {
     const resp = await fetch(endpoint);
     if (resp.status >= 300) {

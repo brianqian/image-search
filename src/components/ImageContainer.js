@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.TouchableOpacity`
@@ -14,8 +14,6 @@ const StyledImage = styled.Image`
   height: ${(p) => p.h}px;
   width: ${(p) => p.w}px;
   flex: 1;
-  /* border-width: 1px;
-  border-color: black; */
 `;
 
 function ImageContainer({ navigate, img, h, w, src }) {

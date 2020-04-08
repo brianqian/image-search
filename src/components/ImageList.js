@@ -6,13 +6,10 @@ import { fetchImages } from '../redux/AppState/appSlice';
 import ImageContainer from './ImageContainer';
 
 const Container = styled.SafeAreaView`
-  /* height: 400px; */
-  /* border: 1px solid red; */
   width: 100%;
   flex: 5;
-
   align-items: center;
-  max-height: 80%;
+  max-height: 90%;
 `;
 
 const StyledList = styled.FlatList`
@@ -42,7 +39,7 @@ function ImageList({ navigation }) {
       <StyledList
         contentContainerStyle={{ alignItems: 'center' }}
         data={images}
-        keyExtractor={(item, i) => item.id.toString() + i}
+        keyExtractor={(item, i) => i + item.id.toString()}
         renderItem={({ item }) => {
           return (
             <ImageContainer

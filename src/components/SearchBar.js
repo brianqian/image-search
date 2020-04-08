@@ -41,7 +41,7 @@ function SearchBar() {
 
   return (
     <Container>
-      <StyledInput onChangeText={handleChange} value={value} />
+      <StyledInput onChangeText={handleChange} value={value} onSubmitEditing={handleSubmit} />
       <StyledButton onPress={handleSubmit} title="Search" />
     </Container>
   );
